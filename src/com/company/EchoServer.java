@@ -4,56 +4,30 @@ import java.io.*;
 import java.net.*;
 
 public class EchoServer {
-    public EchoServer() {
+   private static final int PORT = 1234;
 
-    }
-    public void establish() {
-
-        ServerSocket serverSocket = null;
+    public static void main(String[] args) throws IOException {
         try {
-            serverSocket= new ServerSocket(1234);
-        }catch (IOException e) {
-            System.out.println("Could not listen on port: 1234");
-            System.exit(-1);
-        }
-        Socket clientSocket = null;
+            ServerSocket serverSocket = new ServerSocket(PORT);
+            System.out.println("Server started on port " + PORT);
+            Socket client = serverSocket.accept();
+            System.out.println("Client connected from " + client.getRemoteSocketAddress().toString());
 
-        try {
-            clientSocket = serverSocket.accept();
-            System.out.println("Client connection established.");
-        }catch (IOException e) {
-            System.out.println("Accept failed: 1234");
-            System.exit(-1);
-        }
-        PrintWriter out=null;
-        BufferedReader in = null;
+            // we need to return something!
+            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+            out.println("Welcome to Echo Server, Today's date is: " + (new java.util.Date()).toString());
+            System.out.println("Server send date!");
 
-        try {
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        }catch (IOException ioe) {
-            System.out.println("Failed in creating streams");
-            System.exit(-1);
-        }
+            // maybe get some input
+            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            System.out.println("Message from client: " + (in.readLine()).toString());
 
-        String inputLine, outputLine;
-        try {
-            while ((inputLine = in.readLine()) != null) {
-                out.println(inputLine);
-                if (inputLine.equals("Bye."))
-                    break;
-            }
-        }catch (IOException ioe) {
-            System.out.println("Failed in reading, writing");
-            System.exit(-1);
-        }
 
-        try {
-            clientSocket.close();
+            client.close();
             serverSocket.close();
-        }catch (IOException e) {
-            System.out.println("Could not close");
-            System.exit(-1);
-        }
+
+
+        } catch (Exception e) {
     }
+  }
 }
