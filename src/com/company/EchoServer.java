@@ -20,6 +20,8 @@ public class EchoServer {
               String request = in.readLine();
               PrintWriter out = new PrintWriter(client.getOutputStream(), true);
               if (request.contains("exit")) {
+                  out.close();
+                  in.close();
                   break;
               } else {
                   out.println(" >>> " + request);

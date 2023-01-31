@@ -30,6 +30,8 @@ public class Main {
                 String command = keyboard.readLine();
 
                 if (command.equals("exit")) {
+                    out.close();
+                    in.close();
                     break;
                 }
                 out.println(command);
