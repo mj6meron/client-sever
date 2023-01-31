@@ -25,6 +25,7 @@ public class EchoServer {
 
             client.close();
             serverSocket.close();
+            System.out.println("Socket closed");
 
 
         } catch (Exception e) {
