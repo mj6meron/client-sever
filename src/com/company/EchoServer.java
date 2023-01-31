@@ -13,14 +13,21 @@ public class EchoServer {
             Socket client = serverSocket.accept();
             System.out.println("Client connected from " + client.getRemoteSocketAddress().toString());
 
-            // we need to return something!
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-            out.println("Welcome to Echo Server, Today's date is: " + (new java.util.Date()).toString());
-            System.out.println("Server send date!");
 
-            // maybe get some input
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            System.out.println("Message from client: " + (in.readLine()).toString());
+
+          while (true) {
+              BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+              String request = in.readLine();
+              PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+              if (request.contains("exit")) {
+                  break;
+              } else {
+                  out.println(" >>> " + request);
+                  System.out.println("Server sent echo!");
+              }
+              System.out.println("Message from client: " + request);
+            }
+
 
 
             client.close();
