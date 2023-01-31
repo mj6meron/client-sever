@@ -33,6 +33,8 @@ public class Main {
                     out.close();
                     in.close();
                     break;
+                } else if (command.contains("random")) {
+                    out.println(generateRandomName());
                 }
                 out.println(command);
 
