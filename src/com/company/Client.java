@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class Main {
+public class Client{
 
     private static InetAddress HOST = null;
     private static final int serverPort = 1234;
